@@ -47,4 +47,6 @@ jobs:
         env:
           PROP: ${{needs.read.outputs.prop}}
           COND: ${{needs.read.outputs.cond}}
-        run: echo "$PROP $COND"
+        run: |
+          echo "$PROP $COND"
+          exit 1
