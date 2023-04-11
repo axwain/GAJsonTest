@@ -11,6 +11,9 @@ jobs:
       prop: ${{steps.prepare_json.outputs.prop}}
       cond: ${{steps.prepare_json.outputs.cond}}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - id: prepare_json
         name: Prepare Json
         run: |
@@ -28,6 +31,7 @@ jobs:
 
   use:
     runs-on: ubuntu-latest
+    needs: read
     steps:
       - name: Echo Json values
         run: |
