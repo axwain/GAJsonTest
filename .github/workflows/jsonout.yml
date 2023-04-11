@@ -37,10 +37,15 @@ jobs:
     steps:
       - name: Echo Json values
         run: |
+          echo "${{needs.read.outputs.json}}"
           echo "${{needs.read.outputs.prop}}"
           echo "${{needs.read.outputs.cond}}"
 
       - name: Should run
+        if: needs.read.outputs.cond == true
+        run: echo "should out here!"
+
+      - name: Should run too
         if: needs.read.outputs.cond == true
         run: echo "should out here!"
 
