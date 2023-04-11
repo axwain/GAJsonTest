@@ -34,7 +34,7 @@ jobs:
     needs: read
     steps:
       - name: Echo Json values
-        run: echo ${{needs.read.outputs.json}}
+        run: echo "${{needs.read.outputs.json}}"
 
       - name: Should run
         if: needs.read.outputs.cond == true
