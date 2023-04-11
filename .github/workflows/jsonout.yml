@@ -37,13 +37,13 @@ jobs:
         run: echo "${{needs.read.outputs.json}}"
 
       - name: Should run
-        if: fromJson(needs.read.outputs.json).propB == true
-        run: echo "should out here!"
+        if: fromJson(needs.read.outputs.json).propA == true
+        run: echo "should run here!"
 
       - name: Should not run
-        if: fromJson(needs.read.outputs.json).propB != true
+        if: fromJson(needs.read.outputs.json).propA != true
         env:
-          COND: ${{fromJson(needs.read.outputs.json).propB}}
+          COND: ${{fromJson(needs.read.outputs.json).propA}}
         run: |
           echo "$COND"
           exit 1
