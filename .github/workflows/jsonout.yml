@@ -1,0 +1,46 @@
+name: JsonReadTest
+
+on:
+  workflow_dispatch:
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    outputs:
+      json: ${{steps.prepare_json.outputs.json}}
+      prop: ${{steps.prepare_json.outputs.prop}}
+      cond: ${{steps.prepare_json.outputs.cond}}
+    steps:
+      - id: prepare_json
+        name: Prepare Json
+        run: |
+          json=`cat ./multiLineJson.json`
+          json="${json//'%'/'%25'}"
+          json="${json//'\n'/'%0A'}"
+          json="${json//\r'/'%0D'}"
+          echo "json=$json"
+          echo "json=$json" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "${{fromJson(steps.prepare_json.outputs.json).propA}}"
+          echo "${{fromJson(steps.prepare_json.outputs.json).propB}}"
+          echo "prop=${{fromJson(steps.prepare_json.outputs.json).propB}}" >> "$GITHUB_OUTPUT"
+          echo "cond=${{fromJson(steps.prepare_json.outputs.json).propA}}" >> "$GITHUB_OUTPUT"
+
+  use:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Json values
+        run: |
+          echo "${{needs.read.outputs.prop}}"
+          echo "${{needs.read.outputs.cond}}"
+
+      - name: Should run
+        if: needs.read.outputs.cond == true
+        run: echo "should out here!"
+      
+      - name: Should not run
+        if: needs.read.outputs.cond != true
+        env:
+          PROP: ${{needs.read.outputs.prop}}
+          COND: ${{needs.read.outputs.cond}}
+        run: echo "$PROP $COND"
