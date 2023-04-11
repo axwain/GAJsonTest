@@ -26,8 +26,10 @@ jobs:
       - run: |
           echo "${{fromJson(steps.prepare_json.outputs.json).propA}}"
           echo "${{fromJson(steps.prepare_json.outputs.json).propB}}"
-          echo "prop=${{fromJson(steps.prepare_json.outputs.json).propB}}" >> "$GITHUB_OUTPUT"
-          echo "cond=${{fromJson(steps.prepare_json.outputs.json).propA}}" >> "$GITHUB_OUTPUT"
+          prop="${{fromJson(steps.prepare_json.outputs.json).propA}}"
+          cond="${{fromJson(steps.prepare_json.outputs.json).propB}}"
+          echo "prop=$prop" >> "$GITHUB_OUTPUT"
+          echo "cond=$cond" >> "$GITHUB_OUTPUT"
 
   use:
     runs-on: ubuntu-latest
