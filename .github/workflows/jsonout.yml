@@ -26,12 +26,12 @@ jobs:
           echo "${{fromJson(steps.prepare_json.outputs.json).propA}}"
           echo "${{fromJson(steps.prepare_json.outputs.json).propB}}"
           cond="${{fromJson(steps.prepare_json.outputs.json).propA}}"
-          prop="${{fromJson(steps.prepare_json.outputs.json).propB}}"
-          echo $prop
+          msg="${{fromJson(steps.prepare_json.outputs.json).propB}}"
+          echo $msg
           echo $cond
-          echo "prop=$prop"
-          echo "prop=$prop" >> $GITHUT_OUTPUT
-          echo "steps.prepare_json.outputs.prop"
+          echo "prop=$msg"
+          echo "prop=$msg" >> $GITHUT_OUTPUT
+          echo "${{steps.prepare_json.outputs.prop}}"
 
   use:
     runs-on: ubuntu-latest
