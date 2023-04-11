@@ -25,6 +25,7 @@ jobs:
           echo "${{steps.prepare_json.outputs}}"
       - id: set_outputs
         run: |
+          echo "${{steps.prepare_json.outputs.json}}"
           echo "${{fromJson(steps.prepare_json.outputs.json).propA}}"
           echo "${{fromJson(steps.prepare_json.outputs.json).propB}}"
           cond="${{fromJson(steps.prepare_json.outputs.json).propA}}"
@@ -32,7 +33,7 @@ jobs:
           echo $msg
           echo $cond
           echo "prop=$msg"
-          echo "prop=$msg" >> GITHUB_OUTPUT
+          echo "prop=${msg}" >> GITHUB_OUTPUT
           echo "${{steps.set_outputs.outputs.prop}}"
 
   use:
