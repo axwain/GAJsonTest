@@ -30,7 +30,9 @@ jobs:
           echo $msg
           echo $cond
           echo "prop=$msg"
-          echo "prop=$msg" >> $GITHUB_OUTPUT
+          echo "prop<<$EOF" >> $GITHUB_OUTPUT
+          echo $msg >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
           echo "${{steps.prepare_json.outputs.prop}}"
 
   use:
