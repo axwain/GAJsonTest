@@ -38,8 +38,8 @@ jobs:
           echo "${{steps.set_outputs.outputs.prop}}"
       - id: jq_test
         run: |
-          jq '.propB' -f ./multiLineJson.json
-          jqProp=$(jq '.propB' -f ./multiLineJson.json)
+          jq '.propB' multiLineJson.json
+          jqProp=$(jq '.propB' multiLineJson.json)
           echo "jqProp=$jqProp" >> $GITHUB_OUTPUT
 
   use:
