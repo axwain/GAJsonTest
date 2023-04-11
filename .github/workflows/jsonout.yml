@@ -18,9 +18,11 @@ jobs:
         name: Prepare Json
         run: |
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "json<<${EOF}" >> $GITHUB_OUTPUT
+          echo "json<<$EOF" >> $GITHUB_OUTPUT
           cat multiLineJson.json >> $GITHUB_OUTPUT
-          echo "${EOF}" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+          echo "$GITHUB_OUTPUT"
+          echo "${{steps.prepare_json.outputs}}"
       - run: |
           echo "${{fromJson(steps.prepare_json.outputs.json).propA}}"
           echo "${{fromJson(steps.prepare_json.outputs.json).propB}}"
