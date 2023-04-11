@@ -10,6 +10,7 @@ jobs:
     outputs:
       prop: ${{steps.set_outputs.outputs.prop}}
       json: ${{steps.prepare_json.outputs.json}}
+      jqprop: ${{steps.set_outputs.outputs.jqprop}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,6 +36,11 @@ jobs:
           echo "prop=$msg"
           echo "prop=$msg" >> $GITHUB_OUTPUT
           echo "${{steps.set_outputs.outputs.prop}}"
+      - id: jq_test
+        run: |
+          jq '.propB' -f ./multiLineJson.json
+          jqProp=$(jq '.propB' -f ./multiLineJson.json)
+          echo "jqProp=$jqProp" >> $GITHUB_OUTPUT
 
   use:
     runs-on: ubuntu-latest
