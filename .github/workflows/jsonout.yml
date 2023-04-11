@@ -33,7 +33,7 @@ jobs:
           echo $msg
           echo $cond
           echo "prop=$msg"
-          echo "prop=${msg}" >> GITHUB_OUTPUT
+          echo "prop=$msg" >> $GITHUB_OUTPUT
           echo "${{steps.set_outputs.outputs.prop}}"
 
   use:
