@@ -20,7 +20,7 @@ jobs:
           json="${json//\r'/'%0D'}"
           echo "json=$json"
           echo "json=$json" >> "$GITHUB_OUTPUT"
-        run: |
+      - run: |
           echo "${{fromJson(steps.prepare_json.outputs.json).propA}}"
           echo "${{fromJson(steps.prepare_json.outputs.json).propB}}"
           echo "prop=${{fromJson(steps.prepare_json.outputs.json).propB}}" >> "$GITHUB_OUTPUT"
@@ -37,7 +37,7 @@ jobs:
       - name: Should run
         if: needs.read.outputs.cond == true
         run: echo "should out here!"
-      
+
       - name: Should not run
         if: needs.read.outputs.cond != true
         env:
