@@ -10,7 +10,7 @@ jobs:
     outputs:
       prop: ${{steps.set_outputs.outputs.prop}}
       json: ${{steps.prepare_json.outputs.json}}
-      jqprop: ${{steps.set_outputs.outputs.jqprop}}
+      jqProp: ${{steps.jq_test.outputs.jqProp}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -50,6 +50,7 @@ jobs:
         run: |
           echo "${{needs.read.outputs.json}}"
           echo "${{needs.read.outputs.prop}}"
+          echo "${{needs.read.outputs.jqProp}}"
 
       - name: Should run
         if: fromJson(needs.read.outputs.json).propA == true
