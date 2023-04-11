@@ -17,12 +17,10 @@ jobs:
       - id: prepare_json
         name: Prepare Json
         run: |
-          json=`cat ./multiLineJson.json`
-          json="${json//'%'/'%25'}"
-          json="${json//'\n'/'%0A'}"
-          json="${json//'\r'/'%0D'}"
-          echo "json=$json"
-          echo "json=$json" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "json<<${EOF}" >> $GITHUB_OUTPUT
+          cat multiLineJson.json >> $GITHUB_OUTPUT
+          echo "${EOF}" >> $GITHUB_OUTPUT
       - run: |
           echo "${{fromJson(steps.prepare_json.outputs.json).propA}}"
           echo "${{fromJson(steps.prepare_json.outputs.json).propB}}"
