@@ -8,8 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       json: ${{steps.prepare_json.outputs.json}}
-      prop: ${{steps.prepare_json.outputs.prop}}
-      cond: ${{steps.prepare_json.outputs.cond}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -36,21 +34,18 @@ jobs:
     needs: read
     steps:
       - name: Echo Json values
-        run: |
-          echo "${{needs.read.outputs.json}}"
-          echo "${{needs.read.outputs.prop}}"
-          echo "${{needs.read.outputs.cond}}"
+        run: echo ${{needs.read.outputs.json}}
 
       - name: Should run
         if: needs.read.outputs.cond == true
         run: echo "should out here!"
 
       - name: Should run too
-        if: fromJson(steps.prepare_json.outputs.json).propB == true
+        if: fromJson(needs.read.outputs.json).propB == true
         run: echo "should out here!"
 
       - name: Should not run
-        if: needs.read.outputs.cond != true
+        if: fromJson(needs.read.outputs.json).propB == true
         env:
           PROP: ${{needs.read.outputs.prop}}
           COND: ${{needs.read.outputs.cond}}
