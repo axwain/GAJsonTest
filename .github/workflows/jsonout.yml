@@ -8,7 +8,7 @@ jobs:
   read:
     runs-on: ubuntu-latest
     outputs:
-      prop: ${{steps.prepare_json.outputs.prop}}
+      prop: ${{steps.set_outputs.outputs.prop}}
       json: ${{steps.prepare_json.outputs.json}}
     steps:
       - name: Checkout
