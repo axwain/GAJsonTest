@@ -30,6 +30,7 @@ jobs:
           echo $msg
           echo $cond
           echo "prop=$msg"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "prop<<$EOF" >> $GITHUB_OUTPUT
           echo $msg >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
