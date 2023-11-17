@@ -1,0 +1,51 @@
+name: ArtifactTest
+
+on:
+  workflow_dispatch:
+
+jobs:
+  dummy_upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Dummy
+        run: |
+          echo "Dummy Contents" >> dummy.txt
+          echo "More lines" >> dummy.txt
+          echo "Some final line" >> dummy.txt
+
+      - name: Upload Dummy
+        uses: actions/upload-artifact@v3
+        with:
+          name: dummy
+          path: dummy.txt
+
+      - name: Uploaded
+        run: |
+          echo "Artifact Uploaded"
+
+  dummy_middle_step:
+    runs-on: ubuntu-latest
+    needs: dummy_upload
+    steps:
+      - name: Dummy middle step
+        run: |
+          echo "Hello, I'm a middle step"
+
+  dummy_download:
+    runs-on: ubuntu-latest
+    needs: dummy_middle_step
+    steps:
+      - name: Create Directory
+        run: |
+          mkdir output
+
+      - name: Download dummy
+        uses: actions/download-artifact@v3
+        with:
+          name: dummy
+          path: ./output/
+
+      - name: Show dummy
+        run: |
+          cat ./output/dummy.txt
+
