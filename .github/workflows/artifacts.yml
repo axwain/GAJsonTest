@@ -4,6 +4,11 @@ on:
   workflow_dispatch:
 
 jobs:
+  reused_dummy:
+    uses: ./.github/workflows/reused-artifact.yml
+    with:
+      filename: second_dummy
+
   dummy_upload:
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +50,18 @@ jobs:
           name: dummy
           path: ./output/
 
+      - name: Download dummy from re-used workflow
+        uses: actions/download-artifact@v3
+        with:
+          name: second_dummy
+          path: ./output/
+
       - name: Show dummy
         run: |
+          echo "Dummy from same workflow"
           cat ./output/dummy.txt
+          echo "Print file list"
+          ls -l ./output
+          echo "Dummy from reused workflow"
+          cat ./output/second_dummy.txt
 
