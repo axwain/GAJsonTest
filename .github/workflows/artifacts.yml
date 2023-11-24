@@ -38,7 +38,9 @@ jobs:
 
   dummy_download:
     runs-on: ubuntu-latest
-    needs: dummy_middle_step
+    needs: |
+      dummy_middle_step
+      reused_dummy
     steps:
       - name: Create Directory
         run: |
