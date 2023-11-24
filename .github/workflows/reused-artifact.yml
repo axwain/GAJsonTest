@@ -1,0 +1,29 @@
+name: 'Reused uploaded artifact'
+
+on:
+  workflow_call:
+    inputs:
+      filename:
+        default: 'reused-dummy'
+        type: string
+
+jobs:
+  reused_dummy_upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Re-used Dummy
+        run: |
+          echo "Dummy Contents from reused workflow" >> ${{ inputs.filename }}.txt
+          echo "More lines from the reused workflow" >> ${{ inputs.filename }}.txt
+          echo "Some final line from the reused workflow" >> ${{ inputs.filename }}.txt
+
+      - name: Upload Re-used Dummy
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.filename }}
+          path: ${{ inputs.filename }}.txt
+
+      - name: Uploaded
+        run: |
+          echo "Artifact Uploaded from re-used workflow"
+          
