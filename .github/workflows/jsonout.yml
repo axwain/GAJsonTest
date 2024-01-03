@@ -52,14 +52,12 @@ jobs:
           echo "${{needs.read.outputs.jqProp}}"
 
       - name: Testing with read
+        uses: lgmorand/github-action-hello@v1
         env:
           PROP: ${{needs.read.outputs.prop}}
           JQ_PROP: ${{needs.read.outputs.jqProp}}
         with:
-          PROP: ${{needs.read.outputs.prop}}
-          JQ_PROP: ${{needs.read.outputs.jqProp}}
-          ENV_PROP: ${{env.PROP}}
-          ENV_JQ_PROP: ${{env.JQ_PROP}}
+          firstname: ${{needs.read.outputs.prop}} ${{needs.read.outputs.jqProp}} ${{env.PROP}} ${{env.JQ_PROP}}
 
       - name: Should run
         if: fromJson(needs.read.outputs.json).propA == true
