@@ -38,7 +38,7 @@ jobs:
       - id: jq_test
         run: |
           jq '.propB' multiLineJson.json
-          jqProp=$(jq '.propB' multiLineJson.json)
+          jqProp=$(jq -r '.propB' multiLineJson.json)
           echo "jqProp=$jqProp" >> $GITHUB_OUTPUT
 
   use:
